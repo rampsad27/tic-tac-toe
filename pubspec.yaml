@@ -44,6 +44,7 @@ dependencies:
   flutter_bloc: ^8.1.6
   shared_preferences: ^2.2.3
   cloud_firestore: ^5.1.0
+  parallax_rain: ^1.1.1
 
 dev_dependencies:
   flutter_test:

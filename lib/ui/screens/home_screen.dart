@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:parallax_rain/parallax_rain.dart';
 import 'package:provider/provider.dart';
 import 'package:tictactoe/ui/models/game_state.dart';
 import 'package:tictactoe/ui/screens/game_screen.dart';
@@ -47,44 +48,52 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                // Show opponent dialog to start a new game
-                _showOpponentDialog(context, gameState);
-              },
-              child: const Text('Start New Game'),
-            ),
-            const SizedBox(height: 20),
-            // Only show Resume Play button if there's no winner
-            if (gameState.winner.isEmpty)
+      body: ParallaxRain(
+        distanceBetweenLayers: 1,
+        dropHeight: 12,
+        key: GlobalKey(),
+        dropColors: const [Colors.green, Colors.lightGreen, Colors.greenAccent],
+        trail: true,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
               ElevatedButton(
                 onPressed: () {
-                  // Navigate to GameScreen to resume play
+                  // Show opponent dialog to start a new game
+                  _showOpponentDialog(context, gameState);
+                },
+                child: const Text('Start New Game'),
+              ),
+              const SizedBox(height: 20),
+              // Only show Resume Play button if there's no winner
+              if (gameState.winner.isEmpty)
+                ElevatedButton(
+                  onPressed: () {
+                    // Navigate to GameScreen to resume play
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const GameScreen()),
+                    );
+                  },
+                  child: const Text('Resume Play'),
+                ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  // Navigate to LeaderboardScreen to view leaderboard
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const GameScreen()),
+                    MaterialPageRoute(
+                      builder: (context) => const LeaderboardScreen(),
+                    ),
                   );
                 },
-                child: const Text('Resume Play'),
+                child: const Text('View Leaderboard'),
               ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Navigate to LeaderboardScreen to view leaderboard
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const LeaderboardScreen(),
-                  ),
-                );
-              },
-              child: const Text('View Leaderboard'),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

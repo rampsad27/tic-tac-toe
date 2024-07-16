@@ -1,31 +1,31 @@
-part of 'leaderboard_bloc.dart';
+// part of 'leaderboard_bloc.dart';
 
-enum LeaderboardStateEnum { initial, loading, loaded, error }
+// enum LeaderboardStateEnum { initial, loading, loaded, error }
 
-abstract class LeaderboardState extends Equatable {
-  const LeaderboardState();
+// abstract class LeaderboardState extends Equatable {
+//   const LeaderboardState();
 
-  @override
-  List<Object> get props => [];
-}
+//   @override
+//   List<Object> get props => [];
+// }
 
-class LeaderboardInitial extends LeaderboardState {}
+// class LeaderboardInitial extends LeaderboardState {}
 
-class LeaderboardLoading extends LeaderboardState {
-  @override
-  List<Object> get props => [];
-}
+// class LeaderboardLoading extends LeaderboardState {
+//   @override
+//   List<Object> get props => [];
+// }
 
-class LeaderboardLoaded extends LeaderboardState {
-  @override
-  List<Object> get props => [];
-}
+// class LeaderboardLoaded extends LeaderboardState {
+//   @override
+//   List<Object> get props => [];
+// }
 
-class LeaderboardError extends LeaderboardState {
-  final String error;
+// class LeaderboardError extends LeaderboardState {
+//   final String error;
 
-  const LeaderboardError(this.error);
+//   const LeaderboardError(this.error);
 
-  @override
-  List<Object> get props => [error];
-}
+//   @override
+//   List<Object> get props => [error];
+// }

@@ -82,25 +82,50 @@ class GameState with ChangeNotifier {
     };
 
     await firestore.collection('games').add(gameResult);
-    _updateLeaderboard();
+    // _updateLeaderboard();
   }
 
-  Future<void> _updateLeaderboard() async {
-    final firestore = FirebaseFirestore.instance;
-    if (_winner == 'X') {
-      await firestore.collection('leaderboard').doc(_user!.uid).set({
-        'username': _playerX,
-        'gamesWon': FieldValue.increment(1),
-        'gamesLost': FieldValue.increment(0),
-      }, SetOptions(merge: true));
-    } else if (_winner == 'O') {
-      await firestore.collection('leaderboard').doc(_user!.uid).set({
-        'username': _playerO,
-        'gamesWon': FieldValue.increment(1),
-        'gamesLost': FieldValue.increment(0),
-      }, SetOptions(merge: true));
-    } else {
-      // Handle the draw case if needed
-    }
-  }
+  // Future<void> _updateLeaderboard() async {
+  //   final firestore = FirebaseFirestore.instance;
+  //   if (_winner == _playerX) {
+  //     await firestore.collection('leaderboard').doc(_playerX).set({
+  //       'username': _playerX,
+  //       'gamesWon': FieldValue.increment(1),
+  //       'gamesLost': FieldValue.increment(0),
+  //       'gamesDrawn': FieldValue.increment(0),
+  //     }, SetOptions(merge: true));
+  //     await firestore.collection('leaderboard').doc(_playerO).set({
+  //       'username': _playerO,
+  //       'gamesWon': FieldValue.increment(0),
+  //       'gamesLost': FieldValue.increment(1),
+  //       'gamesDrawn': FieldValue.increment(0),
+  //     }, SetOptions(merge: true));
+  //   } else if (_winner == _playerO) {
+  //     await firestore.collection('leaderboard').doc(_playerO).set({
+  //       'username': _playerO,
+  //       'gamesWon': FieldValue.increment(1),
+  //       'gamesLost': FieldValue.increment(0),
+  //       'gamesDrawn': FieldValue.increment(0),
+  //     }, SetOptions(merge: true));
+  //     await firestore.collection('leaderboard').doc(_playerX).set({
+  //       'username': _playerX,
+  //       'gamesWon': FieldValue.increment(0),
+  //       'gamesLost': FieldValue.increment(1),
+  //       'gamesDrawn': FieldValue.increment(0),
+  //     }, SetOptions(merge: true));
+  //   } else if (_winner == 'Draw') {
+  //     await firestore.collection('leaderboard').doc(_playerX).set({
+  //       'username': _playerX,
+  //       'gamesWon': FieldValue.increment(0),
+  //       'gamesLost': FieldValue.increment(0),
+  //       'gamesDrawn': FieldValue.increment(1),
+  //     }, SetOptions(merge: true));
+  //     await firestore.collection('leaderboard').doc(_playerO).set({
+  //       'username': _playerO,
+  //       'gamesWon': FieldValue.increment(0),
+  //       'gamesLost': FieldValue.increment(0),
+  //       'gamesDrawn': FieldValue.increment(1),
+  //     }, SetOptions(merge: true));
+  //   }
+  // }
 }
