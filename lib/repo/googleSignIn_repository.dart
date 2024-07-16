@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,7 +27,9 @@ class GoogleSignInRepository {
   }
 
   Future<User?> getUserInfo() async {
-    return _firebaseAuth.currentUser;
+    final user = _firebaseAuth.currentUser;
+
+    return user;
   }
 
   Future<void> signOut() async {

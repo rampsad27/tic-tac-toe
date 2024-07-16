@@ -66,4 +66,5 @@ class DefaultFirebaseOptions {
     projectId: 'tic-tac-toe-b4438',
     storageBucket: 'tic-tac-toe-b4438.appspot.com',
   );
+
 }

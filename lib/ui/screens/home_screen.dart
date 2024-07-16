@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tictactoe/ui/models/game_state.dart';
 import 'package:tictactoe/ui/screens/game_screen.dart';
-import 'package:tictactoe/ui/screens/leader_board_screen.dart';
+import 'package:tictactoe/ui/screens/leaderboard/leader_board_screen.dart';
 import 'package:tictactoe/ui/screens/profile_screen.dart';
+import 'package:tictactoe/ui/widgets/sidetransition.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -20,7 +21,7 @@ class HomeScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const ProfileScreen()),
+                SlideTransitionRoute(page: const ProfileScreen()),
               );
             },
             icon: const Icon(Icons.account_box_outlined),

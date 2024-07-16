@@ -1,38 +1,66 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tictactoe/ui/screens/sso_login/bloc/googlesignin_bloc.dart';
+import 'package:tictactoe/ui/screens/sso_login/log_in_screen.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    // Replace with actual user data retrieval logic if needed
-    String username = 'John Doe';
-    int gamesPlayed = 10; // Replace with actual game statistics
-    int gamesWon = 6; // Replace with actual game statistics
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
 
+class _ProfileScreenState extends State<ProfileScreen> {
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<GooglesigninBloc>(context).add(CheckLoggedInUser());
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: Center(
+          child: BlocBuilder<GooglesigninBloc, GooglesigninState>(
+            builder: (context, state) {
+              if (state is Authenticated) {
+                return Text(state.user.displayName ?? 'Profile');
+              }
+              return const Text('Prof');
+            },
+          ),
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Username: $username',
-              style: const TextStyle(fontSize: 24),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              'Games Played: $gamesPlayed',
-              style: const TextStyle(fontSize: 20),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              'Games Won: $gamesWon',
-              style: const TextStyle(fontSize: 20),
-            ),
-          ],
+      body: BlocListener<GooglesigninBloc, GooglesigninState>(
+        listener: (context, state) {
+          if (state is LogoutSuccess) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const LogInScreen()),
+              (Route<dynamic> route) => false,
+            );
+          }
+        },
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  BlocProvider.of<GooglesigninBloc>(context)
+                      .add(LogOutRequested());
+                },
+                child: const Text("Logout"),
+              ),
+            ],
+          ),
         ),
       ),
     );

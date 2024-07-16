@@ -9,7 +9,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Simulate a splash screen delay
-    Timer(const Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const LogInScreen()),
@@ -20,7 +20,7 @@ class SplashScreen extends StatelessWidget {
       body: Center(
           child: Image.asset(
         "assets/images/a.png",
-        fit: BoxFit.fill,
+        fit: BoxFit.cover,
       )),
     );
   }
