@@ -8,34 +8,38 @@ class LeaderboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Leaderboard'),
+        title: const Text('Game Results'),
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream:
-            FirebaseFirestore.instance.collection('leaderboard').snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('games')
+            .orderBy('timestamp', descending: true)
+            .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return const Center(child: Text('No data available'));
+            return const Center(child: Text('No game results available'));
           }
 
-          final leaderboard = snapshot.data!.docs;
+          final gameResults = snapshot.data!.docs;
 
           return ListView.builder(
-            itemCount: leaderboard.length,
+            itemCount: gameResults.length,
             itemBuilder: (context, index) {
-              var userData = leaderboard[index].data() as Map<String, dynamic>;
+              var gameData = gameResults[index].data() as Map<String, dynamic>;
 
               return ListTile(
-                title: Text(userData['username']),
+                title: Text('Game ${index + 1}'),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Games Won: ${userData['gamesWon']}'),
-                    Text('Games Lost: ${userData['gamesLost']}'),
-                    Text('Games Drawn: ${userData['gamesDrawn']}'),
+                    Text('Player X: ${gameData['playerX']}'),
+                    Text('Player O: ${gameData['playerO']}'),
+                    Text('Winner: ${gameData['winner']}'),
+                    Text(
+                        'Timestamp: ${(gameData['timestamp'] as Timestamp).toDate()}'),
                   ],
                 ),
               );
