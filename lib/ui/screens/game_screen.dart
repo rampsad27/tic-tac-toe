@@ -18,10 +18,16 @@ class GameScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            if (gameState.playerX != null && gameState.playerO != null)
+              Text(
+                '${gameState.playerX} (X) vs ${gameState.playerO} (O)',
+                style: const TextStyle(fontSize: 24),
+              ),
+            const SizedBox(height: 12),
             Text(
               gameState.winner.isNotEmpty
-                  ? 'Winner: ${gameState.winner}'
-                  : 'Current Player: ${gameState.currentPlayer}',
+                  ? 'Winner: ${gameState.winner == 'X' ? gameState.playerX : gameState.winner == 'O' ? gameState.playerO : 'Draw'}'
+                  : 'Current Player: ${gameState.currentPlayer == 'X' ? gameState.playerX : gameState.playerO}',
               style: const TextStyle(fontSize: 24),
             ),
             const SizedBox(height: 12),

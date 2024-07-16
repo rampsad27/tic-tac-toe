@@ -7,41 +7,44 @@ class LeaderboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Leaderboard'),
-      ),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection('leaderboard')
-            .orderBy('score', descending: true)
-            .snapshots(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
-          }
+        appBar: AppBar(
+          title: const Text('Leaderboard'),
+        ),
+        body: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection('leaderboard')
+              .orderBy('score', descending: true)
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+              return const Center(child: Text('No data available'));
+            }
 
-          final leaderboard = snapshot.data!.docs;
+            final leaderboard = snapshot.data!.docs;
 
-          return ListView.builder(
-            itemCount: leaderboard.length,
-            itemBuilder: (context, index) {
-              var userData = leaderboard[index].data() as Map<String, dynamic>;
+            return ListView.builder(
+              itemCount: leaderboard.length,
+              itemBuilder: (context, index) {
+                var userData =
+                    leaderboard[index].data() as Map<String, dynamic>;
 
-              return ListTile(
-                title: Text(userData['username']),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Score: ${userData['score']}'),
-                    Text('Games Won: ${userData['gamesWon']}'),
-                    Text('Games Lost: ${userData['gamesLost']}'),
-                  ],
-                ),
-              );
-            },
-          );
-        },
-      ),
-    );
+                return ListTile(
+                  title: Text(userData['username']),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Score: ${userData['score']}'),
+                      Text('Games Won: ${userData['gamesWon']}'),
+                      Text('Games Lost: ${userData['gamesLost']}'),
+                    ],
+                  ),
+                );
+              },
+            );
+          },
+        ));
   }
 }
