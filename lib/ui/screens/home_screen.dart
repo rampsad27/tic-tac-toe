@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -106,8 +107,11 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 String opponentName = opponentController.text;
                 if (opponentName.isNotEmpty) {
-                  gameState.resetGame(); // Reset the game state
-                  String? playerDisplayName = gameState.user?.displayName;
+                  gameState.resetGame();
+
+                  User? user =
+                      FirebaseAuth.instance.currentUser; // Reset the game state
+                  String? playerDisplayName = user?.displayName;
 
                   // Check if playerDisplayName is not null
                   if (playerDisplayName != null) {
