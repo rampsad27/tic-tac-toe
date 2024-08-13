@@ -19,7 +19,7 @@ class GoogleSignInRepository {
       );
       UserCredential userCredential =
           await _firebaseAuth.signInWithCredential(credential);
-      await _saveUserCredentials(userCredential.user);
+      await _saveUserCredentials(userCredential.user); //save user email
       return userCredential;
     } else {
       throw Exception('Sign in with Google failed');
@@ -27,15 +27,15 @@ class GoogleSignInRepository {
   }
 
   Future<User?> getUserInfo() async {
+    //used later in leaderboard
     final user = _firebaseAuth.currentUser;
-
     return user;
   }
 
   Future<void> signOut() async {
     await _googleSignIn.signOut();
     await _firebaseAuth.signOut();
-    await _clearUserCredentials();
+    await _clearUserCredentials(); //clear user email
   }
 
   Future<void> _saveUserCredentials(User? user) async {

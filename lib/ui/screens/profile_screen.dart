@@ -27,7 +27,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               if (state is Authenticated) {
                 return Text(state.user.displayName ?? 'Profile');
               }
-              return const Text('Prof');
+              return const Text('null');
             },
           ),
         ),
@@ -54,8 +54,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  BlocProvider.of<GooglesigninBloc>(context)
-                      .add(LogOutRequested());
+                  context.read<GooglesigninBloc>().add(LogOutRequested());
                 },
                 child: const Text("Logout"),
               ),

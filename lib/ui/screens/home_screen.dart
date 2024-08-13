@@ -7,7 +7,7 @@ import 'package:parallax_rain/parallax_rain.dart';
 import 'package:provider/provider.dart';
 import 'package:tictactoe/ui/models/game_state.dart';
 import 'package:tictactoe/ui/screens/game_screen.dart';
-import 'package:tictactoe/ui/screens/leaderboard/leader_board_screen.dart';
+import 'package:tictactoe/ui/screens/leader_board_screen.dart';
 import 'package:tictactoe/ui/screens/profile_screen.dart';
 import 'package:tictactoe/ui/screens/sso_login/bloc/googlesignin_bloc.dart';
 import 'package:tictactoe/ui/widgets/sidetransition.dart';
@@ -23,7 +23,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    // Fetch initial user login state when the screen initializes
     BlocProvider.of<GooglesigninBloc>(context).add(CheckLoggedInUser());
   }
 
@@ -38,7 +37,6 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              // Navigate to ProfileScreen on IconButton press
               Navigator.push(
                 context,
                 SlideTransitionRoute(page: const ProfileScreen()),
@@ -60,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  // Show opponent dialog to start a new game
+                  // Show opponent dialog
                   _showOpponentDialog(context, gameState);
                 },
                 child: const Text('Start New Game'),
@@ -70,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
               if (gameState.winner.isEmpty)
                 ElevatedButton(
                   onPressed: () {
-                    // Navigate to GameScreen to resume play
+                    // Navigate to GameScreen to resume
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -82,7 +80,6 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  // Navigate to LeaderboardScreen to view leaderboard
                   Navigator.push(
                     context,
                     MaterialPageRoute(

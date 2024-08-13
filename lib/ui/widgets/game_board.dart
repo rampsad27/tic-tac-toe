@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/game_state.dart'; // Import your game state model
+import '../models/game_state.dart';
 
 class GameBoard extends StatelessWidget {
   const GameBoard({super.key});
